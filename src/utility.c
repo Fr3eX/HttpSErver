@@ -13,5 +13,3 @@ void* Bzero(void* buffer,size_t length)
 
 	return memset(buffer,0,length);
 }
-
-
