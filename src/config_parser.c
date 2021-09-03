@@ -35,11 +35,7 @@ void __ParseCfgFile(char const* file)
 	char buffer[BUFFER_LENGTH]={0}; //The standard guarantees that a line can contain up to 255 characters
 
 	if(!in)
-	{
 		LogErr("[CONFIG_PARSER] Failed to open configuration file (%s)",file);
-		exit(EXIT_FAILURE);
-	
-	}
 
 	while(fgets(buffer,sizeof buffer,in))
 	{
@@ -93,10 +89,7 @@ static void __AddEntry(char const* key,void* data,size_t data_length)
 	Map* new=(Map*)malloc(sizeof(Map));
 	
 	if(!new)
-	{
-		LogWarr("[CONFIG_PARSER] Not enough Memory (%p)",new);
-		exit(EXIT_FAILURE);
-	}
+		LogErr("[CONFIG_PARSER] Not enough Memory (%p)",new);
 	
 	size_t key_length=strlen(key);
 
@@ -156,7 +149,6 @@ static void __ParseLine(char const* line)
 			{
 				free(l_side);
 				LogErr("[CONFIG_PARSER] Not enough Memory (%p)",tmp);
-				exit(EXIT_FAILURE);
 			}
 			l_side=tmp;		
 			*(l_side+ch-1)='\0';
@@ -173,7 +165,6 @@ static void __ParseLine(char const* line)
 			{
 				free(l_side);
 				LogErr("[CONFIG_PARSER] Not enough Memory (%p)",tmp);
-				exit(EXIT_FAILURE);
 			}
 			l_side=tmp;	
 			*(l_side+ch-1)=*(line + i);
@@ -194,7 +185,6 @@ static void __ParseLine(char const* line)
 				{
 					free(r_side);
 					LogErr("[CONFIG_PARSER] Not enough Memory (%p)",tmp);
-					exit(EXIT_FAILURE);
 				}
 				r_side=tmp;		
 				*(r_side+ch-1)='\0';
@@ -208,7 +198,6 @@ static void __ParseLine(char const* line)
 				{
 					free(r_side);
 					LogErr("[CONFIG_PARSER] Not enough Memory (%p)",tmp);
-					exit(EXIT_FAILURE);
 				}
 				r_side=tmp;
 				*(r_side+ch-1)=*(line + i);
