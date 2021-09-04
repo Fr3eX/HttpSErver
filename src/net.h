@@ -1,13 +1,12 @@
 #ifndef NET_H
 #define NET_H
 
+#define MAX_PORTNUMBER 65000
+#define MIN_PORTNUMBER 1050
+
+int __GetServerSocket(const char*);
+unsigned int __SendDATA(int,void*,size_t);
+void *__ReceiveDATA(int,void*,size_t*);
 
 
-
-
-int __GetServerSocket();
-
-
-
-
-#endif
+#endif //NET_H

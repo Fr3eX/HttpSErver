@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+#include "net.h"
+#include "utility.h"
 
 #define SOCKET_ERROR -1
-
 
 #if defined(WIN32)
 	#include <winsock2.h>
@@ -24,8 +24,14 @@ int main(int argc,char *argv[])
 		WSADATA WSAData;
 		WSAStartup(MAKEWORD(2,2),&WSAData);
 	#endif
+	
+	unsigned short sockfd;
+	if(argc < 1)
+		sockfd=__GetServerSocket(argv[1]);	
+	else 
+		sockfd=__GetServerSocket(argv[1]);
 
-
+	
 
 	#if defined(WIN32)
 		WSACleanup();
