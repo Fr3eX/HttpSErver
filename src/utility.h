@@ -6,26 +6,26 @@
 
 #define __$errno() (errno == 0) ? "Success":strerror(errno)
 
-#define LogInfo(message,...) fprintf(stdout,"~INFO~ : "message"\n",__VA_ARGS__)
+#define LogInfo(message,...) fprintf(stdout,"~INFO~ : ["UNIT"] "message"\n",__VA_ARGS__)
 
 #define LogErr(message,...) \
 			{\
-				fprintf(stderr,"~ERROR~ : "message"\n",__VA_ARGS__);\
+				fprintf(stderr,"~ERROR~ : ["UNIT"] "message"\n",__VA_ARGS__);\
 				exit(EXIT_FAILURE);\
 			}
 		
 
-#define LogWarr(message,...) fprintf(stderr,"~WARNING~ : "message"\n",__VA_ARGS__)
+#define LogWarr(message,...) fprintf(stderr,"~WARNING~ : ["UNIT"] "message"\n",__VA_ARGS__)
 
 
 
-/* Custom method for deleting request and response structure*/
+/* Custom method for deleting request and response props*/
 #define delete(var,prop) if(var && var->prop) \
 				free(var->prop);
 
 
 /*Msg error in case the allocation didn't go well */
-#define ErrAmsg(var) LogWarr("[REQUEST] Not enough memory (%p)",var); \
+#define RAmsg(var) LogWarr("Not enough memory (%p)",var); \
 		    return NULL
 
 

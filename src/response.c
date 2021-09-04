@@ -4,25 +4,28 @@
 #include "response.h"
 #include "utility.h"
 
+#define UNIT "RESPONSE"
+
+
 httpResponse *newResponseObject(httpRespStatusCode* code,char* reason,char*httpversion)
 {
 	httpResponse *response = malloc(sizeof(httpResponse));
 
 	if(!response)
-		ErrAmsg(response);
+		RAmsg(response);
 
 	response->statusCode = malloc(sizeof(httpRespStatusCode));
 	response->reason = malloc((strlen(reason)+1) * sizeof(char));
 	response->httpversion = malloc((strlen(httpversion)+1) * sizeof(char));
 	
 	if(!response->statusCode)
-		ErrAmsg(response->statusCode);
+		RAmsg(response->statusCode);
 	
 	if(!response->httpversion)
-		ErrAmsg(response->httpversion);
+		RAmsg(response->httpversion);
 
 	if(!response->reason)
-		ErrAmsg(response->reason);
+		RAmsg(response->reason);
 
 	
 	return response;

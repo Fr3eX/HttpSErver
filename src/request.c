@@ -4,7 +4,7 @@
 #include "request.h"
 #include "utility.h"
 
-
+#define UNIT "REQUEST"
 
 
 httpRequest *newRequestObject(httpReqMethod method,char* uri,char*httpversion)
@@ -12,20 +12,20 @@ httpRequest *newRequestObject(httpReqMethod method,char* uri,char*httpversion)
 	httpRequest *request = malloc(sizeof(httpRequest));
 
 	if(!request)
-		ErrAmsg(request);
+		RAmsg(request);
 
 	request->method = malloc(sizeof(httpReqMethod));
 	request->uri = malloc((strlen(uri)+1) * sizeof(char));
 	request->httpversion = malloc((strlen(httpversion)+1) * sizeof(char));
 	
 	if(!request->method)
-		ErrAmsg(request->method);
+		RAmsg(request->method);
 	
 	if(!request->httpversion)
-		ErrAmsg(request->httpversion);
+		RAmsg(request->httpversion);
 
 	if(!request->uri)
-		ErrAmsg(request->uri);
+		RAmsg(request->uri);
 
 	
 	return request;
