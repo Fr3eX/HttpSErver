@@ -85,6 +85,9 @@ typedef struct httpRequest
 	char *contentType;
 	char *expires;
 	char *lastModified;
+
+
+	void *body;
 }httpRequest;
 
 httpRequest* newRequestObject(httpReqMethod,char*,char*);

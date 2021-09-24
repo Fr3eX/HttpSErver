@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "request.h"
+#include "debug.h"
 #include "utility.h"
+#include "request.h"
+
 
 #define UNIT "REQUEST"
 
@@ -78,7 +80,8 @@ void *freeRequestObject(httpRequest* request)
 	delete(request,expires);
 	delete(request,lastModified);
 
-	
+	delete(request,body);
+		
 	free(request);
 
 	return NULL;

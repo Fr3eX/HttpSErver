@@ -128,6 +128,8 @@ typedef struct httpResponse
 	char *transferEncoding;
 	char *via;
 	char *warning;
+
+	void* body;
 }httpResponse;
 
 

@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "response.h"
+#include "debug.h"
 #include "utility.h"
+#include "response.h"
 
 #define UNIT "RESPONSE"
 
@@ -69,6 +70,8 @@ void *freeResponseObject(httpResponse* response)
 	delete(response,via);
 	delete(response,warning);
 	
+
+	delete(response,body);	
 	
 	free(response);
 
