@@ -26,7 +26,7 @@ static void __ParseLine(char const*);
 
 
 static Map *parsed_data=NULL;
-
+static char configFileName[255] = {0};
 
 
 void __ParseCfgFile(char const* file)
@@ -37,6 +37,8 @@ void __ParseCfgFile(char const* file)
 	if(!in)
 		LogErr("Failed to open configuration file (%s)",file);
 
+	strcpy(configFileName,file);	
+	
 	while(fgets(buffer,sizeof buffer,in))
 	{
 		//Escapte lines that start with "#"
@@ -214,3 +216,9 @@ static void __ParseLine(char const* line)
 	free(r_side);
 }
 
+
+
+char* getConfigFilename()
+{
+	return configFileName;
+}
