@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 #include "net.h"
 #include "utility.h"
+#include "config_parser.h"
 
-#define SOCKET_ERROR -1
 
 #if defined(WIN32)
 	#include <winsock2.h>
@@ -20,6 +21,12 @@
 
 int main(int argc,char *argv[])
 {	
+	
+	if(!argv[1])
+		__ParseCfgFile("config");	
+	else
+		__ParseCfgFile(argv[1]);	
+	
 	#if defined (WIN32)
 		WSADATA WSAData;
 		WSAStartup(MAKEWORD(2,2),&WSAData);
@@ -32,6 +39,11 @@ int main(int argc,char *argv[])
 		sockfd=__GetServerSocket(argv[1]);
 
 	
+	
+			
+
+
+
 
 	#if defined(WIN32)
 		WSACleanup();

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "net.h"
+#include "debug.h"
 #include "utility.h"
 #include "config_parser.h"
 
@@ -22,7 +23,7 @@
 	#error "System not supported"
 #endif
 
-int __GetServerSocket(const char* filename)
+int __GetServerSocket()
 {			
 	unsigned short sockfd;
 	struct sockaddr_in* ipv4_addr;
@@ -34,20 +35,16 @@ int __GetServerSocket(const char* filename)
 	unsigned int srv_port;	
 	/*Loading file config data*/
 	
-	if(!filename)
-		__ParseCfgFile("config");	
-	else
-		__ParseCfgFile(filename);	
 
 	srv_sport = __Get("SERVER_PORT");
 	srv_saddr = __Get("SERVER_IP");
 	srv_sbacklog = __Get("SERVER_BACKLOG");	
 	
 	if(!srv_saddr)
-		LogErr("No port number found in file %s",(!filename)?"config":filename)
+		LogErr("No port number found in file %s",getConfigFilename())
 	
 	if(!srv_sport)
-		LogErr("No port number found in file %s",(!filename)?"config":filename)
+		LogErr("No port number found in file %s",getConfigFilename())
 	else
 	{
 		srv_port = atoi(srv_sport);
@@ -73,6 +70,7 @@ int __GetServerSocket(const char* filename)
 		LogErr("socket() : %s",__$errno())
 	
 	unsigned char reuseAddr=1;
+	
 	if(setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR,&reuseAddr,sizeof reuseAddr)<0)
 		LogErr("setsockopt()() : %s",__$errno())
 
@@ -88,8 +86,6 @@ int __GetServerSocket(const char* filename)
 		LogErr("listen() : %s",__$errno())
 	
 	LogInfo("%s:%s listening ...",srv_saddr,srv_sport);
-	
-	__FreePData();
 	
 	return sockfd;
 }
@@ -134,8 +130,9 @@ void *__ReceiveDATA(int sockfd,void* packet,size_t* size)
 	
 	if(*size == 0)
 	{
-		/*If we dont knwo the size -> i'll just read 8kb (it can be any other size + or - ) and 
-		 * i'll determine after  parsing the packet if i need more bytes
+		/* 
+		 * To encounter the problems listed above we'll just read 8kb (it can be any other size + or - ) and 
+		 * we'll determine after parsing the packet if we need more bytes
 		 */
 
 		const unsigned short buffer_size = 8192;
