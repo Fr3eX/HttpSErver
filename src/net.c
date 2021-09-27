@@ -69,7 +69,7 @@ int __GetServerSocket()
 	if((sockfd=socket(PF_INET,SOCK_STREAM,IPPROTO_TCP))<0)
 		LogErr("socket() : %s",__$errno())
 	
-	unsigned char reuseAddr=1;
+	unsigned int reuseAddr=1;
 	
 	if(setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR,&reuseAddr,sizeof reuseAddr)<0)
 		LogErr("setsockopt()() : %s",__$errno())
@@ -127,7 +127,7 @@ void *__ReceiveDATA(int sockfd,void* packet,size_t* size)
 	 * -We don't know the exact size of data that we're receiving
 	 * -recv doesn't guarantee the reception of {{size}} data
 	 */
-	
+
 	if(*size == 0)
 	{
 		/* 
